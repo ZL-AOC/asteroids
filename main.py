@@ -5,6 +5,8 @@ import pygame
 
 def main():
     pygame.init()
+    pygame.time.Clock()
+    dt = 0
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     black = (0,0,0)
     while True:
@@ -13,6 +15,7 @@ def main():
                 return
         screen.fill(black)
         pygame.display.flip()
+        screen.tick(60)
 
 if __name__ == "__main__":
     main()
