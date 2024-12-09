@@ -5,17 +5,22 @@ import pygame
 
 def main():
     pygame.init()
-    pygame.time.Clock()
+    clock = pygame.time.Clock()
     dt = 0
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    black = (0,0,0)
+# above line sets window resolution
+    black = (0, 0, 0)
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+            # enables closing the window
         screen.fill(black)
         pygame.display.flip()
-        screen.tick(60)
+        dt = clock.tick(60) / 1000
+# dt updating to delta time, limiting frame rate
+# for resource efficiency
+
 
 if __name__ == "__main__":
     main()
