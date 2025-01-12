@@ -1,14 +1,24 @@
 from constants import *
 from player import Player
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
+from shot import Shot
 import pygame
 # allows us to use code from open-source pygame library
 # throughout this file
-
+updatable = pygame.sprite.Group()
+drawable = pygame.sprite.Group()
+asteroids = pygame.sprite.Group()
+shots = pygame.sprite.Group()
+Asteroid.containers = (asteroids, updatable, drawable)
+AsteroidField.containers = (updatable)
+Player.containers = (updatable, drawable)
+Shot.containers = (updatable, drawable)
 
 def main():
     pygame.init()
     player = Player((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2))
-# using screen constants, keeps player icon at center of screen
+    asteroidfield = AsteroidField()
     clock = pygame.time.Clock()
     dt = 0
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -20,8 +30,14 @@ def main():
                 return
             # enables closing the window
         screen.fill(black)
-        player.update(dt)
-        player.draw(screen)
+        for item in updatable:
+            item.update(dt)
+        for ast in asteroids:
+            if ast.is_colliding(player):
+                print('Game Over!')
+                exit()
+        for item in drawable:
+            item.draw(screen)
 # draw player before flip screen, but after screen draw
         pygame.display.flip()
         dt = clock.tick(60) / 1000
