@@ -36,6 +36,9 @@ def main():
             if ast.is_colliding(player):
                 print('Game Over!')
                 exit()
+            if ast.is_colliding(shot):
+                shot.kill()
+                ast.kill()
         for item in drawable:
             item.draw(screen)
 # draw player before flip screen, but after screen draw
